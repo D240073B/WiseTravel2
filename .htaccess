@@ -1,0 +1,15 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /wisetravel2/
+    
+    # Redirect API requests to api/public
+    RewriteCond %{REQUEST_URI} ^/wisetravel2/api/(.*)$
+    RewriteRule ^api/(.*)$ api/public/index.php [L,QSA]
+    
+    # Allow direct access to existing files
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    
+    # Serve index.html for all other requests
+    RewriteRule ^.*$ index.html [L]
+</IfModule>

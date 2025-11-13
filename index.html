@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WiseTravel</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script src="api-config.js"></script>
+    <script src="script.js" defer></script>
+    
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo" onclick="navigateToSection('home')">
+                <span class="logo-icon">🌏</span>
+                <span class="logo-text">WiseTravel</span>
+            </div>
+            
+            <div class="nav-menu" id="navMenu">
+                <a href="#home" class="nav-link active" onclick="navigateToSection('home')">
+                    <span class="nav-icon">🏠</span>
+                    Home
+                </a>
+                <div class="nav-dropdown">
+                    <a href="#dashboard" class="nav-link" onclick="navigateToSection('dashboard')">
+                        <span class="nav-icon">⚙️</span>
+                        Services
+                        <span class="dropdown-arrow">▼</span>
+                    </a>
+                    <div class="dropdown-content">
+                        <a href="#my-adventures" onclick="navigateToSection('dashboard', 'my-adventures')">
+                            <span class="service-icon">🗺️</span>
+                            My Malaysia Adventures
+                        </a>
+                        <a href="#expense-tracking" onclick="navigateToSection('dashboard', 'travel-expenses')">
+                            <span class="service-icon">💰</span>
+                            Travel Expenses
+                        </a>
+                        <a href="#budget-management" onclick="navigateToSection('dashboard', 'budget-overview')">
+                            <span class="service-icon">📊</span>
+                            Budget Overview
+                        </a>
+                         <a href="#cash-flow" onclick="navigateToSection('dashboard', 'cash-flow')">
+                            <span class="service-icon">💸</span>
+                            Cash Flow
+                        </a>
+                        <a href="#group-travel" onclick="navigateToSection('dashboard', 'group-travel')">
+                            <span class="service-icon">👥</span>
+                            Group Travel
+                        </a>
+                        <a href="#travel-tips" onclick="navigateToSection('dashboard', 'travel-tips')">
+                            <span class="service-icon">🌟</span>
+                            Malaysia Travel Tips
+                        </a>
+                    </div>
+                </div>
+                <a href="#about" class="nav-link" onclick="navigateToSection('about')">
+                    <span class="nav-icon">ℹ️</span>
+                    About Us
+                </a>
+            </div>
+
+            <div class="nav-right">
+                <button id="night-mode-toggle" class="night-mode-toggle">
+                    <span class="sun-icon">☀️</span>
+                    <span class="moon-icon">🌙</span>
+                </button>
+                <div class="nav-user" id="navUser" style="display: none;">
+                    <div class="user-dropdown">
+                        <a href="#profile" class="nav-link user-link" onclick="toggleUserDropdown(event)">
+                            <span class="nav-icon">👤</span>
+                            <span id="navUsername">User</span>
+                            <span class="dropdown-arrow">▼</span>
+                        </a>
+                        <div class="user-dropdown-content">
+                            <a href="#profile" onclick="showProfile()">
+                                <span class="service-icon">👤</span>
+                                Profile
+                            </a>
+                            <a href="#settings" onclick="showSettings()">
+                                <span class="service-icon">⚙️</span>
+                                Settings
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="nav-toggle" id="navToggle" onclick="toggleMobileMenu()">
+                <span class="hamburger"></span>
+                <span class="hamburger"></span>
+                <span class="hamburger"></span>
+            </div>
+        </div>
+    </nav>
+    
+        <div class="header" id="home" style="display:none;">
+        <h1>WiseTravel</h1>
+        <p>Track your Malaysian adventure expenses, manage group spending, and explore Malaysia within budget</p>
+
+        <div id="carouselExampleCaptions" class="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img src="img/Copilot_20250624_144808.png" class="d-block w-150" alt="A vibrant street in Malaysia, showcasing the unique architecture and lively atmosphere.">
+            </div>
+          </div>
+        </div>
+
+        <section class="pt-5 pt-md-9" id="bestServices">
+            <div class="container">
+              <div class="position-absolute z-index--1 end-0 d-none d-lg-block"><img src="img/service.gif" style="max-width: 200px" alt="service" /></div>
+              <div class="mb-7 text-center">
+                <h5 class="text-secondary">CATEGORY </h5>
+                <h2 class="fs-xl-10 fs-lg-8 fs-7 fw-bold font-cursive text-capitalize">We Offer Best Services</h2>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-sm-6 mb-6">
+                  <div class="card service-card shadow-hover rounded-3 text-center align-items-center">
+                    <div class="card-body p-xxl-5 p-4"> <img src="img/map.gif" width="100" alt="Service" />
+                      <h4 class="mb-3">My Malaysia Adventures</h4>
+                      <p class="mb-0 fw-medium">Plan your next Malaysian adventure with WiseTravel</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6 mb-6">
+                  <div class="card service-card shadow-hover rounded-3 text-center align-items-center">
+                    <div class="card-body p-xxl-5 p-4"> <img src="img/budget.gif" width="100" alt="Service" />
+                      <h4 class="mb-3">Travel Expenses</h4>
+                      <p class="mb-0 fw-medium">Track your expenses and budget with WiseTravel</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6 mb-6">
+                  <div class="card service-card shadow-hover rounded-3 text-center align-items-center">
+                    <div class="card-body p-xxl-5 p-4"> <img src="img/accounting.gif" width="100" alt="Service" />
+                      <h4 class="mb-3">Budget Overview</h4>
+                      <p class="mb-0 fw-medium">View your budget with WiseTravel</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6 mb-6">
+                  <div class="card service-card shadow-hover rounded-3 text-center align-items-center">
+                    <div class="card-body p-xxl-5 p-4"> <img src="img/cashflow.gif" width="100" alt="Service" />
+                      <h4 class="mb-3">Cash Flow</h4>
+                      <p class="mb-0 fw-medium">View your cash flow with WiseTravel</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6 mb-6">
+                  <div class="card service-card shadow-hover rounded-3 text-center align-items-center">
+                    <div class="card-body p-xxl-5 p-4"> <img src="img/profit.gif" width="100" alt="Service" />
+                      <h4 class="mb-3">Group Travel</h4>
+                      <p class="mb-0 fw-medium">Manage your group travel with WiseTravel</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6 mb-6">
+                  <div class="card service-card shadow-hover rounded-3 text-center align-items-center">
+                    <div class="card-body p-xxl-5 p-4"> <img src="img/advice.gif" width="100" alt="Service" />
+                      <h4 class="mb-3">Malaysia Travel Tips</h4>
+                      <p class="mb-0 fw-medium">Get personalized recommendations for your destination</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div></section>
+
+        </div>
+        <!-- User Info (hidden initially) -->
+        <div class="user-info hidden" id="userInfo">
+            <span>Welcome, <span id="currentUser"></span>!</span>
+            <button class="btn btn-secondary" onclick="logout()">Logout</button>
+        </div>
+
+        <!-- Authentication Section -->
+        <div class="auth-section" id="authSection">
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchAuthTab('login')">Login</button>
+                <button class="auth-tab" onclick="switchAuthTab('register')">Register</button>
+            </div>
+
+            <!-- Login Form -->
+            <div id="loginForm">
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" id="loginEmail" placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label>Password:</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password">
+                </div>
+                <button class="btn" onclick="login()">Login</button>
+            </div>
+
+            <!-- Register Form -->
+            <div id="registerForm" class="hidden">
+                <div class="form-group">
+                    <label>Name:</label>
+                    <input type="text" id="registerName" placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" id="registerEmail" placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label>Password:</label>
+                    <input type="password" id="registerPassword" placeholder="Create a password">
+                </div>
+                <div class="form-group">
+                    <label>Preferred Currency:</label>
+                    <select id="registerCurrency">
+                        <option value="MYR">MYR (RM)</option>
+                        <option value="USD">USD ($)</option>
+                        <option value="EUR">EUR (€)</option>
+                        <option value="GBP">GBP (£)</option>
+                        <option value="SGD">SGD (S$)</option>
+                    </select>
+                </div>
+    
+                <button class="btn" onclick="register()">Register & Start Journey</button>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div class="dashboard" id="dashboard">
+
+            <div class="dashboard-grid">
+                <!-- Trip Management -->
+                <div class="card" id="my-adventures">
+                    <h3>🗺️ My Malaysia Adventures</h3>
+                    <button class="btn" onclick="openModal('tripModal')">Plan New Trip</button>
+                    <div id="tripsList"></div>
+                </div>
+
+                <!-- Expense Tracking -->
+                <div class="card" id="travel-expenses">
+                    <h3>💰 Travel Expenses</h3>
+                    <div id="currentTripInfo">
+                        <p>Select a trip to view expenses</p>
+                    </div>
+                    <button class="btn" onclick="openModal('expenseModal')" id="addExpenseBtn" style="display: none;">Add Expense</button>
+                    <div id="expensesList"></div>
+                </div>
+
+                <!-- Budget Overview -->
+                <div class="card" id="budget-overview">
+                    <h3>📊 Budget Overview</h3>
+                    <div id="budgetOverview">
+                        <p>Select a trip to view budget</p>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="budgetChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Cash Flow -->
+                <div class="card" id="cash-flow">
+                    <h3>💸 Cash Flow</h3>
+                    <div id="cashFlowContainer">
+                        <div class="chart-container">
+                            <canvas id="cashFlowChart"></canvas>
+                        </div>
+                        <div id="transactionDetails">
+                            <p>Select a trip to see the cash flow.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Group Management -->
+                <div class="card" id="group-travel">
+                    <h3>👥 Group Travel</h3>
+                    <button class="btn" onclick="openModal('participantsModal')" id="manageGroupBtn" style="display: none;">Manage Travel Buddies</button>
+                    <div id="groupOverview"></div>
+                </div>
+                
+                 <!-- Export Options -->
+                <div class="card">
+                    <h3>📄 Export Travel Data</h3>
+                     <p>Select a trip to enable exporting.</p>
+                    <button class="btn" onclick="exportToPDF()" id="exportPdfBtn" style="display: none;">Export to PDF</button>
+                    <button class="btn btn-secondary" onclick="exportToCSV()" id="exportCsvBtn" style="display: none;">Export to CSV</button>
+                </div>
+            </div>
+
+            <!-- Malaysia Travel Tips -->
+            <div class="tips-section card" id="travel-tips">
+                <h3>🌟 Malaysia Travel Tips</h3>
+                <p>Select a trip to get personalized recommendations for your destination!</p>
+                <div id="tipsContainer"></div>
+            </div>
+
+        </div>
+
+        <div id="about" style="display:none;" class="about-container">
+            <div class="about-header">
+                <h2>ℹ️ About WiseTravel</h2>
+                <p class="subtitle">Your Ultimate Companion for Malaysian Adventures</p>
+            </div>
+        
+            <div class="about-content card">
+                <h3>Our Purpose</h3>
+                <p>WiseTravel was born from a passion for exploring the diverse beauty of Malaysia without the financial stress that often accompanies travel. Our mission is to empower travelers—whether flying solo or in a group—to take full control of their finances. By providing intuitive tools for budgeting, expense tracking, and group spending management, we help you focus on what truly matters: creating unforgettable memories. We believe that a well-planned journey is a joyful one, and our platform is designed to make that a reality for every adventurer.</p>
+        
+                <h3>How It Works</h3>
+                <p>WiseTravel simplifies every aspect of your trip's financial planning through a suite of powerful, user-friendly features:</p>
+                <ul>
+                    <li><strong>My Malaysia Adventures:</strong> Easily create and manage individual trip plans. Set your destination, dates, and overall budget to kickstart your adventure.</li>
+                    <li><strong>Travel Expenses:</strong> Log every expenditure with details like category, date, and who paid. This creates a clear, real-time record of your spending.</li>
+                    <li><strong>Budget Overview:</strong> Our interactive dashboard shows you how much you've spent against your budget with a visual progress bar and a doughnut chart breaking down spending by category.</li>
+                    <li><strong>Cash Flow Analysis:</strong> The line chart tracks cumulative spending over time, helping you visualize your financial pace throughout the trip.</li>
+                    <li><strong>Group Travel Management:</strong> Add your travel buddies, and WiseTravel will automatically calculate who owes what, simplifying shared expenses and ensuring fairness.</li>
+                    <li><strong>Dynamic Travel Tips:</strong> Based on your chosen destination, get curated recommendations for attractions, cuisine, and activities to enhance your experience.</li>
+                </ul>
+            </div>
+        
+            <div class="team-section">
+                <h3>Meet the Developer Team</h3>
+                <div class="team-container">
+                    <div class="team-member-card">
+                        <img src="img/personal.png" alt="Team Member 1">
+                        <h4>Yeong Sei Jie</h4>
+                        <p class="role">Lead Developer</p>
+                        <p class="bio">The mastermind behind the robust functionality of WiseTravel, ensuring a seamless and bug-free user experience.</p>
+                    </div>
+                    <div class="team-member-card">
+                        <img src="img/WhatsApp 图像2025-06-28于00.41.39_f0f574ac.jpg" alt="Team Member 2">
+                        <h4>Lee Jian Shen</h4>
+                        <p class="role">Documenter</p>
+                        <p class="bio">The documenter who writes project documentation, user guides, system design, technical specs, testing records, and update logs.</p>
+                    </div>
+                    <div class="team-member-card">
+                        <img src="img/wallace.jpg" alt="Team Member 3">
+                        <h4>Wallace Tang</h4>
+                        <p class="role">Tester</p>
+                        <p class="bio">The tester who ensures the quality assurance, feature validation, bug detection, usability use case testing, performance checks, and test documentation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Section -->
+        <div id="profile" style="display:none;" class="profile-container">
+            <div class="profile-header">
+                <h2>👤 User Profile</h2>
+                <p class="subtitle">Manage your account information</p>
+            </div>
+        
+            <div class="profile-content card">
+                <div class="profile-info-section">
+                    <h3>Account Information</h3>
+                    <div class="profile-field">
+                        <label>Username:</label>
+                        <span id="profileUsername">Loading...</span>
+                    </div>
+                    <div class="profile-field">
+                        <label>Email:</label>
+                        <span id="profileEmail">Loading...</span>
+                    </div>
+                    <div class="profile-field">
+                        <label>Password:</label>
+                        <span id="profilePassword">••••••••</span>
+                    </div>
+                    <div class="profile-field">
+                        <label>Preferred Currency:</label>
+                        <span id="profileCurrency">Loading...</span>
+                    </div>
+                    <button class="btn btn-primary" onclick="showEditProfile()">
+                        <span class="nav-icon">✏️</span>
+                        Update Profile
+                    </button>
+                </div>
+
+                <!-- Edit Profile Form (Hidden by default) -->
+                <div class="profile-edit-section" id="profileEditSection" style="display:none;">
+                    <h3>Update Profile Information</h3>
+                    <div class="form-group">
+                        <label>Username:</label>
+                        <input type="text" id="editUsername" placeholder="Enter your username">
+                    </div>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" id="editEmail" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label>New Password:</label>
+                        <input type="password" id="editPassword" placeholder="Enter new password (leave blank to keep current)">
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm New Password:</label>
+                        <input type="password" id="editPasswordConfirm" placeholder="Confirm new password">
+                    </div>
+                    <div class="form-group">
+                        <label>Preferred Currency:</label>
+                        <select id="editCurrency">
+                            <option value="MYR">MYR (RM)</option>
+                            <option value="USD">USD ($)</option>
+                            <option value="EUR">EUR (€)</option>
+                            <option value="GBP">GBP (£)</option>
+                            <option value="SGD">SGD (S$)</option>
+                        </select>
+                    </div>
+                    <div class="profile-buttons">
+                        <button class="btn btn-primary" onclick="updateProfile()">
+                            <span class="nav-icon">💾</span>
+                            Save Changes
+                        </button>
+                        <button class="btn btn-secondary" onclick="cancelEditProfile()">
+                            <span class="nav-icon">❌</span>
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Section -->
+        <div id="settings" style="display:none;" class="settings-container">
+            <div class="settings-header">
+                <h2>⚙️ Settings</h2>
+                <p class="subtitle">Manage your preferences and share your feedback</p>
+            </div>
+
+            <!-- Feedback Section -->
+            <div class="settings-content card">
+                <div class="feedback-section">
+                    <div class="section-header">
+                        <h3>💬 Send Us Your Feedback</h3>
+                        <p>We value your input! Share your suggestions, questions, or report any issues you encounter.</p>
+                    </div>
+
+                    <!-- Feedback Form -->
+                    <div class="feedback-form" id="feedbackForm">
+                        <div class="form-group">
+                            <label for="feedbackType">
+                                <span class="label-icon">🏷️</span>
+                                Feedback Type
+                            </label>
+                            <select id="feedbackType" class="custom-select feedback-type-select">
+                                <option value="">Select type...</option>
+                                <option value="suggestion">💡 Suggestion - Share your ideas</option>
+                                <option value="question">❓ Question - Ask us anything</option>
+                                <option value="problem">⚠️ Problem - Report an issue</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="feedbackSubject">
+                                <span class="label-icon">📌</span>
+                                Subject
+                            </label>
+                            <input 
+                                type="text" 
+                                id="feedbackSubject" 
+                                placeholder="Brief summary of your feedback" 
+                                maxlength="255"
+                                class="feedback-input">
+                            <small class="char-counter">
+                                <span id="subjectCharCount">0</span>/255 characters
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="feedbackMessage">
+                                <span class="label-icon">✍️</span>
+                                Message
+                            </label>
+                            <textarea 
+                                id="feedbackMessage" 
+                                placeholder="Tell us more about your feedback..." 
+                                rows="6"
+                                class="feedback-textarea"></textarea>
+                            <small class="char-counter">
+                                Minimum 10 characters
+                            </small>
+                        </div>
+
+                        <div class="feedback-actions">
+                            <button class="btn btn-primary feedback-submit-btn" onclick="submitFeedback()">
+                                <span class="btn-icon">📤</span>
+                                <span class="btn-text">Submit Feedback</span>
+                                <span class="btn-spinner" style="display: none;">⏳</span>
+                            </button>
+                            <button class="btn btn-secondary" onclick="clearFeedbackForm()">
+                                <span class="btn-icon">🔄</span>
+                                Clear Form
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Feedback Success Message -->
+                    <div id="feedbackSuccess" class="feedback-message success-message" style="display: none;">
+                        <span class="message-icon">✅</span>
+                        <div class="message-content">
+                            <strong>Thank you for your feedback!</strong>
+                            <p>We've received your message and will review it soon.</p>
+                        </div>
+                    </div>
+
+                    <!-- My Feedback History -->
+                    <div class="feedback-history-section">
+                        <div class="section-header">
+                            <h3>📋 My Feedback History</h3>
+                            <button class="btn btn-secondary btn-sm" onclick="loadFeedbackHistory()">
+                                <span class="btn-icon">🔄</span>
+                                Refresh
+                            </button>
+                        </div>
+
+                        <div id="feedbackHistoryContainer" class="feedback-list">
+                            <div class="loading-state">
+                                <span class="loading-icon">⏳</span>
+                                <p>Loading your feedback history...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Modals -->
+    <!-- Trip Modal -->
+    <div id="tripModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('tripModal')">&times;</span>
+            <h2>Plan Your Malaysian Adventure</h2>
+            <div class="form-group">
+                <label for="tripName">Trip Name:</label>
+                <input type="text" id="tripName" placeholder="e.g., KL Food Hunt 2024">
+            </div>
+            <div class="form-group">
+                <label for="tripDestination">Destination:</label>
+                <select id="tripDestination">
+                    <option value="">Loading destinations...</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="tripStartDate">Start Date:</label>
+                <input type="date" id="tripStartDate">
+            </div>
+            <div class="form-group">
+                <label for="tripEndDate">End Date:</label>
+                <input type="date" id="tripEndDate">
+            </div>
+            <div class="form-group">
+                <label for="tripBudget">Total Budget :</label>
+                <input type="number" id="tripBudget" placeholder="e.g., 1500">
+            </div>
+            <button class="btn" onclick="createTrip()">Create Trip</button>
+        </div>
+    </div>
+
+    <!-- Expense Modal -->
+    <div class="modal" id="expenseModal">
+        <div class="modal-content expense-modal">
+            <div class="modal-header">
+                <div class="modal-title-section">
+                    <div class="modal-icon">💰</div>
+                    <div>
+                        <h3 class="modal-title">Add Travel Expense</h3>
+                        <p class="modal-subtitle">Track your spending during the trip</p>
+                    </div>
+                </div>
+                <span class="close modern-close" onclick="closeModal('expenseModal')">&times;</span>
+            </div>
+            
+            <div class="modal-body">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="expenseDescription">
+                            <span class="label-icon">📝</span>
+                            Description
+                        </label>
+                        <input type="text" id="expenseDescription" placeholder="e.g., Airport taxi ride">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group form-half">
+                            <label for="expenseAmount">
+                                <span class="label-icon">💵</span>
+                                Amount
+                            </label>
+                            <input type="number" step="0.01" id="expenseAmount" placeholder="0.00">
+                        </div>
+                        <div class="form-group form-half">
+                            <label for="expenseDate">
+                                <span class="label-icon">📅</span>
+                                Date
+                            </label>
+                            <input type="date" id="expenseDate">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="expenseCategory">
+                            <span class="label-icon">🏷️</span>
+                            Category
+                        </label>
+                        <select id="expenseCategory" class="custom-select">
+                            <option value="Food">🍜 Food & Dining</option>
+                            <option value="Accommodation">🏨 Accommodation</option>
+                            <option value="Transportation">🚗 Transportation</option>
+                            <option value="Activities">🎯 Activities & Tours</option>
+                            <option value="Shopping">🛍️ Shopping</option>
+                            <option value="Other">📝 Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="expensePaidBy">
+                            <span class="label-icon">👤</span>
+                            Paid By
+                        </label>
+                        <select id="expensePaidBy" class="custom-select">
+                            <option value="1">Me (Default)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <span class="label-icon">👥</span>
+                            Shared With
+                        </label>
+                        <div id="expenseSharedWith" class="shared-with-container"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="expenseNotes">
+                            <span class="label-icon">📋</span>
+                            Notes
+                            <span class="optional-label">(Optional)</span>
+                        </label>
+                        <textarea id="expenseNotes" placeholder="Add receipt details, location, or any other notes..." rows="3"></textarea>
+                    </div>
+                </div>
+                
+                <div class="date-validation-info">
+                    <small id="expenseDateHelper" class="date-helper">
+                        <span class="helper-icon">💡</span>
+                        Enter the date when this expense occurred
+                    </small>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-secondary modern-btn" onclick="closeModal('expenseModal')">
+                    <span class="btn-icon">✕</span>
+                    Cancel
+                </button>
+                <button class="btn btn-success modern-btn" onclick="addExpense()">
+                    <span class="btn-icon">💾</span>
+                    Add Expense
+                </button>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+
+    <!-- Update Expense Modal -->
+    <div class="modal" id="updateExpenseModal">
+        <div class="modal-content expense-modal">
+            <div class="modal-header">
+                <div class="modal-title-section">
+                    <div class="modal-icon">💰</div>
+                    <div>
+                        <h3 class="modal-title">Update Travel Expense</h3>
+                        <p class="modal-subtitle">Modify your expense details</p>
+                    </div>
+                </div>
+                <span class="close modern-close" onclick="closeModal('updateExpenseModal')">&times;</span>
+            </div>
+            
+            <div class="modal-body">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="updateExpenseDescription">
+                            <span class="label-icon">📝</span>
+                            Description
+                        </label>
+                        <input type="text" id="updateExpenseDescription" placeholder="e.g., Airport taxi ride">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group form-half">
+                            <label for="updateExpenseAmount">
+                                <span class="label-icon">💵</span>
+                                Amount
+                            </label>
+                            <input type="number" step="0.01" id="updateExpenseAmount" placeholder="0.00">
+                        </div>
+                        <div class="form-group form-half">
+                            <label for="updateExpenseDate">
+                                <span class="label-icon">📅</span>
+                                Date
+                            </label>
+                            <input type="date" id="updateExpenseDate">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="updateExpenseCategory">
+                            <span class="label-icon">🏷️</span>
+                            Category
+                        </label>
+                        <select id="updateExpenseCategory" class="custom-select">
+                            <option value="Food">🍜 Food & Dining</option>
+                            <option value="Accommodation">🏨 Accommodation</option>
+                            <option value="Transportation">🚗 Transportation</option>
+                            <option value="Activities">🎯 Activities & Tours</option>
+                            <option value="Shopping">🛍️ Shopping</option>
+                            <option value="Other">📝 Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="updateExpensePaidBy">
+                            <span class="label-icon">👤</span>
+                            Paid By
+                        </label>
+                        <select id="updateExpensePaidBy" class="custom-select">
+                            <option value="1">Me (Default)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <span class="label-icon">👥</span>
+                            Shared With
+                        </label>
+                        <div id="updateExpenseSharedWith" class="shared-with-container"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="updateExpenseNotes">
+                            <span class="label-icon">📋</span>
+                            Notes
+                            <span class="optional-label">(Optional)</span>
+                        </label>
+                        <textarea id="updateExpenseNotes" placeholder="Add receipt details, location, or any other notes..." rows="3"></textarea>
+                    </div>
+                </div>
+                
+                <div class="date-validation-info">
+                    <small id="updateExpenseDateHelper" class="date-helper">
+                        <span class="helper-icon">💡</span>
+                        Enter the date when this expense occurred
+                    </small>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-secondary modern-btn" onclick="closeModal('updateExpenseModal')">
+                    <span class="btn-icon">✕</span>
+                    Cancel
+                </button>
+                <button class="btn btn-success modern-btn" onclick="updateExpense()">
+                    <span class="btn-icon">💾</span>
+                    Update Expense
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Participants Modal -->
+    <div class="modal" id="participantsModal">
+        <div class="modal-content participants-modal">
+            <span class="close" onclick="closeModal('participantsModal')">&times;</span>
+            <div class="modal-header-custom">
+                <h3 class="modal-title-custom">
+                    <span class="modal-icon">👥</span>
+                    Manage Travel Buddies
+                </h3>
+            </div>
+            
+            <div class="add-buddy-section">
+                <label class="section-label">Add Travel Buddy:</label>
+                <div class="input-group-custom">
+                    <input type="text" id="participantName" placeholder="Enter travel buddy name" class="input-modern">
+                    <button class="btn btn-add-modern" onclick="addParticipant()">
+                        <span class="btn-icon">+</span>
+                        Add
+                    </button>
+                </div>
+            </div>
+            
+            <div class="participants-list-section">
+                <div id="participantsList"></div>
+            </div>
+            
+            <div class="money-matters-section">
+                <h4 class="section-title-custom">
+                    <span class="section-icon">💰</span>
+                    Money Matters & Settlement
+                </h4>
+                <div id="balancesList"></div>
+            </div>
+            
+            <button class="btn btn-close-modern" onclick="closeModal('participantsModal')">Close</button>
+        </div>
+    </div>
+
+</body>
+</html>
