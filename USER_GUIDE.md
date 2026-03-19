@@ -1,4 +1,4 @@
-# 🌏 WiseTravel - User Guider
+# 🌏 WiseTravel - User Guiders
 
 ## 📖 Table of Contents
 1. [Quick Start](#-quick-start)
